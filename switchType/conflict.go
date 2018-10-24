@@ -4,6 +4,10 @@ import (
 	"fmt"
 )
 
+type someBadInterface interface {
+	NonExistantMethod()
+}
+type someAnotherInterface interface {}
 type someInterface interface {}
 type someType int
 
@@ -13,6 +17,8 @@ func newSomeType() someInterface {
 
 func main() {
 	switch newSomeType().(type) {
+	case someBadInterface:
+		fmt.Println("won't happened")
 	case someInterface:
 		fmt.Println("hey!")
 	case someType:
@@ -20,8 +26,17 @@ func main() {
 	}
 
 	switch newSomeType().(type) {
+	case someAnotherInterface:
+		fmt.Println("hey, again")
+	case someInterface:
+		fmt.Println("won't happened")
+	default:
+		fmt.Println("won't happened")
+	}
+
+	switch newSomeType().(type) {
 	case someType:
-		fmt.Println("hey, again...")
+		fmt.Println("hey, once more...")
 	case someInterface:
 		fmt.Println("won't happened")
 	}
