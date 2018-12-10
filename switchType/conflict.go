@@ -10,6 +10,7 @@ type someBadInterface interface {
 type someAnotherInterface interface {}
 type someInterface interface {}
 type someType int
+type someTypeAlias = someType
 
 func newSomeType() someInterface {
 	return someType(0)
@@ -19,6 +20,8 @@ func main() {
 	switch newSomeType().(type) {
 	case someBadInterface:
 		fmt.Println("won't happened")
+	//case someTypeAlias: // this line will cause compilation error: "duplicate case someType in type switch"
+	//	fmt.Println("hey?")
 	case someInterface:
 		fmt.Println("hey!")
 	case someType:
